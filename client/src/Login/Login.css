@@ -1,0 +1,25 @@
+.login-container {
+  display: flex;
+  min-height: 80vh;
+}
+
+.login-form {
+  margin: auto;
+  padding: 16px;
+  min-width: 400px;
+  border: 1px solid lightblue;
+}
+
+.login-form h1 {
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+.login-form .username-input {
+  display: flex;
+  align-items: flex-end;
+}
+
+label + input {
+  margin-left: 16px;
+}

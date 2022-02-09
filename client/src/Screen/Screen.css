@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+}
+
+.chat-container {
+  margin: auto;
+  padding: 16px;
+
+  display: flex;
+}
+
+.list-panel {
+  width: 200px;
+  border: 1px solid lightblue;
+  border-right: none;
+}
+
+.in-room {
+  background-color: antiquewhite;
+}
+
+.online {
+  padding: 16px;
+}
+
+.online:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.panel-chat-container {
+  min-height: 400px;
+  width: 800px;
+  padding: 16px;
+  border: 1px solid lightblue;
+}
+
+p {
+  margin: 0;
+}
+
+.panel-chat-container > p + p {
+  margin-top: 16px;
+}
+
+.typing-container {
+  display: flex;
+}
+
+.chat-container .message {
+  flex: 1;
+}
