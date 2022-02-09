@@ -27,8 +27,6 @@ io.on('connection', function (socket) {
       listOnline.push(username);
     }
 
-    console.log(listOnline);
-
     io.sockets.emit('Response-List-Online', listOnline);
 
     socket.on('disconnect', function () {
@@ -45,24 +43,29 @@ io.on('connection', function (socket) {
       console.log(`Join room ${`${data.joinRoom}`} successful`);
       if (data.joinRoom === 'public') {
         socket.on(`public-request-send-message`, (message) => {
-          io.in(`public`).emit(`public-response-send-message`, {
+          socket.to(`public`).emit(`public-response-send-message`, {
             id: username,
+            message: message,
+          });
+
+          socket.emit(`public-response-send-message`, {
+            id: 'You',
             message: message,
           });
         });
       } else {
         socket.on(`private-request-send-message`, (message) => {
-          io.in(`${data.joinRoom}`).emit(`private-response-send-message`, {
-            id: username,
+          socket.to(`${data.joinRoom}`).emit(`private-response-send-message`, {
+            id: 'username',
+            message: message,
+          });
+
+          socket.emit(`private-response-send-message`, {
+            id: 'You',
             message: message,
           });
         });
       }
     });
-  });
-
-  socket.on('Client-sent-data', function (data) {
-    //sau khi lắng nghe dữ liệu, server phát lại dữ liệu này đến các client khác
-    socket.emit('Server-sent-data', data);
   });
 });

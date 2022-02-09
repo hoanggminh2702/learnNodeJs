@@ -24,6 +24,7 @@ const Screen = ({ username }: ScreenProps) => {
   }, []);
 
   useEffect(() => {
+    console.log(socket);
     if (socket) {
       socket.emit('Request-List-Online', username);
 
