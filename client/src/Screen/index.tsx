@@ -13,7 +13,6 @@ const Screen = ({ username }: ScreenProps) => {
   const [curRoom, setCurRoom] = useState<string>('');
   const [listOnline, setListOnline] = useState<string[]>([]);
   const [clickTo, setClickTo] = useState<string>('');
-  const [lastClickTo, setLastClickTo] = useState<string>('');
 
   useEffect(() => {
     const newSocket = io('http://localhost:8080');
@@ -22,7 +21,7 @@ const Screen = ({ username }: ScreenProps) => {
     return () => {
       newSocket.close();
     };
-  }, [setSocket]);
+  }, []);
 
   useEffect(() => {
     if (socket) {
@@ -41,14 +40,18 @@ const Screen = ({ username }: ScreenProps) => {
   };
 
   useEffect(() => {
-    socket?.on(`${calChanelName(clickTo)}-response-send-message`, updateChat);
+    console.log('call');
+    socket?.on(`public-response-send-message`, updateChat);
+    socket?.on(`private-response-send-message`, updateChat);
 
     return () => {
-      socket?.removeListener(`${calChanelName(clickTo)}-response-send-message`);
+      socket?.removeAllListeners(`public-response-send-message`);
+      socket?.removeAllListeners(`private-response-send-message`);
     };
-  }, [clickTo]);
+  }, [socket, clickTo]);
 
   const handleSendMessage = () => {
+    console.log(clickTo);
     if (socket) {
       socket.emit(`${calChanelName(clickTo)}-request-send-message`, message);
       setMessage('');
@@ -79,7 +82,6 @@ const Screen = ({ username }: ScreenProps) => {
     });
 
     setChat([]);
-    setLastClickTo(clickTo);
     setClickTo(e.target.innerHTML);
 
     setCurRoom(roomName);
