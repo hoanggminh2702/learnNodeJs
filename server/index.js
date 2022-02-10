@@ -56,7 +56,7 @@ io.on('connection', function (socket) {
       } else {
         socket.on(`private-request-send-message`, (message) => {
           socket.to(`${data.joinRoom}`).emit(`private-response-send-message`, {
-            id: 'username',
+            id: username,
             message: message,
           });
 
